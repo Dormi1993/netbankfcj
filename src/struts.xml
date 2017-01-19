@@ -49,7 +49,7 @@
 		<!-- 为UserAction类中的changepwd方法配置映射 -->
 		<action name="changepwd" class="user" method="changepwd">
 			<result name="input">/changepwd.jsp</result>
-			<result name="message">/message.jsp</result>
+			<result name="message2">/message.jsp</result>
 			<!--<interceptor-ref name="roleStack"/>-->
 		</action>
 	</package>

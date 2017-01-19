@@ -81,11 +81,11 @@ public class UserAction extends ActionSupport implements RequestAware, SessionAw
         account.setPassword(pwd.getNewpwd());
         if (userBiz.modifyAccount(account)){
             session.put("user", account);
-            request.put("message", "密码修改成功！");
-            return "message";
+            request.put("message33", "密码修改成功fafa！");
+            return "message2";
         }
-        request.put("message", "密码修改失败！");
-        return "message";
+        request.put("message33", "密码修改失败！");
+        return "message2";
     }
 
     public Account getAccount() {

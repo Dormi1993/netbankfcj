@@ -72,4 +72,20 @@
     <!-- 使用原型模式定义UserAction类，UserAction类的属性通过Annotation注解方式注入 -->
     <bean name="user" class="com.netbank.action.UserAction" scope="prototype"/>
 
+    <!-- 定义PersoninfoDaoImpl，并给类中的sessionFactory属性注入值 -->
+    <bean id="personinfoDao" class="com.netbank.dao.impl.PersoninfoDAOImpl">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <!-- 定义PersoninfoBizImpl，并给其属性personinfoDAO和userDAO注入Bean实例 -->
+    <bean id="personinfoBiz" class="com.netbank.biz.impl.PersoninfoBizImpl">
+        <property name="personinfoDAO" ref="personinfoDao"/>
+        <property name="userDAO" ref="userDao"/>
+    </bean>
+
+    <!--使用原型模式定义PersoninfoAction类，PersoninfoAction类的属性通过Annotation注解方式注入-->
+    <bean name="personinfo" class="com.netbank.action.PersoninfoAction" scope="prototype"/>
+
+
+
 </beans>
