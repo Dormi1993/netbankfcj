@@ -87,5 +87,20 @@
     <bean name="personinfo" class="com.netbank.action.PersoninfoAction" scope="prototype"/>
 
 
+    <bean id="transactionDAO" class="com.netbank.dao.impl.TransactionDAOImpl">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean id="transactionBiz" class="com.netbank.biz.impl.TransactionBizImpl">
+        <property name="transactionDAO" ref="transactionDAO"/>
+        <property name="userDAO" ref="userDao"/>
+    </bean>
+
+    <!--使用原型模式定义Transaction类，PersoninfoAction类的属性通过Annotation注解方式注入-->
+    <bean name="transaction" class="com.netbank.action.Transaction" scope="prototype">
+        <property name="userBiz" ref="userBiz"/>
+        <property name="transactionBiz" ref="transactionBiz"/>
+    </bean>
+
 
 </beans>

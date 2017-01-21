@@ -32,4 +32,10 @@ public class UserDAOImpl implements UserDAO {
         session.merge(account);
         return true;
     }
+
+    @Override
+    public void reflush(Account account) {
+        Session session = sessionFactory.getCurrentSession();
+        session.refresh(account);
+    }
 }

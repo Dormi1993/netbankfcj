@@ -10,4 +10,5 @@ public interface UserDAO {
     public Account getAccount(String username);
     //修改账户
     public boolean updateAccount(Account account);
+    public void reflush(Account account);
 }

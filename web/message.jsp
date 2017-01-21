@@ -26,7 +26,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <body> 
 	<div align="center">
     	<s:fielderror cssStyle="color:red;"/>
-    	${message}<br>
+    	${message33}<br>
     	<!--上传时间:<s:date name="date"/><br>
 					 realPath:${realPath}<br>
 				    contextPath:${contextPath}<br>

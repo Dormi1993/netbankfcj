@@ -29,4 +29,9 @@ public class UserBizImpl implements UserBiz{
     public boolean modifyAccount(Account account) {
         return userDAO.updateAccount(account);
     }
+
+    @Override
+    public void reflush(Account account) {
+        userDAO.reflush(account);
+    }
 }
