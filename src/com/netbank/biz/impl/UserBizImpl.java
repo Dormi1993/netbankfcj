@@ -34,4 +34,14 @@ public class UserBizImpl implements UserBiz{
     public void reflush(Account account) {
         userDAO.reflush(account);
     }
+
+    @Override
+    //根据账户ID获取账户
+    @Transactional(readOnly = true)
+    public Account getAccount(int accountid) {
+        return userDAO.getAccount(accountid);
+
+    }
+
+
 }

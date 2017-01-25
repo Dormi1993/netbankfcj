@@ -96,7 +96,7 @@
         <property name="userDAO" ref="userDao"/>
     </bean>
 
-    <!--使用原型模式定义Transaction类，PersoninfoAction类的属性通过Annotation注解方式注入-->
+    <!--使用原型模式定义Transaction类，并给属性userBiz和transactionBiz注入值-->
     <bean name="transaction" class="com.netbank.action.Transaction" scope="prototype">
         <property name="userBiz" ref="userBiz"/>
         <property name="transactionBiz" ref="transactionBiz"/>

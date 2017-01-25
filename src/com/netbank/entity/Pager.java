@@ -1,10 +1,10 @@
 package com.netbank.entity;
 
 public class Pager {
-	private int curPage;//´ıÏÔÊ¾Ò³
-	private int perPageRows ;//Ò»Ò³ÏÔÊ¾µÄ¼ÇÂ¼Êı  
-	private int rowCount; //¼ÇÂ¼×ÜÊı  
-	private int pageCount; //×ÜÒ³Êı 	
+	private int curPage;//å¾…æ˜¾ç¤ºé¡µ
+	private int perPageRows ;//ä¸€é¡µæ˜¾ç¤ºçš„è®°å½•æ•°
+	private int rowCount; //è®°å½•æ€»æ•°
+	private int pageCount; //æ€»é¡µæ•°
 	public int getCurPage() {
 		return curPage;
 	}

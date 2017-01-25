@@ -12,4 +12,5 @@ public interface UserBiz {
     //修改账户
     public abstract boolean modifyAccount(Account account);
     public abstract void reflush(Account account);
+    public abstract Account getAccount(int accountid);
 }

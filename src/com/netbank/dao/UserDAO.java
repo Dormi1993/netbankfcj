@@ -11,4 +11,6 @@ public interface UserDAO {
     //修改账户
     public boolean updateAccount(Account account);
     public void reflush(Account account);
+    //根据账户id获取账户对象
+    public Account getAccount(int accountid);
 }

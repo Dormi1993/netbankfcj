@@ -3,11 +3,13 @@ package com.netbank.action;
 import com.netbank.biz.TransactionBiz;
 import com.netbank.biz.UserBiz;
 import com.netbank.entity.Account;
+import com.netbank.entity.Pager;
 import com.netbank.entity.TransactionLog;
 import com.opensymphony.xwork2.ActionSupport;
 import org.apache.struts2.interceptor.RequestAware;
 import org.apache.struts2.interceptor.SessionAware;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -56,6 +58,17 @@ public class Transaction extends ActionSupport implements RequestAware, SessionA
         this.log = log;
     }
 
+    //分页实体类
+    private Pager pager;
+
+    public Pager getPager() {
+        return pager;
+    }
+
+    public void setPager(Pager pager) {
+        this.pager = pager;
+    }
+
     public String deposit(){
         //调用自定义方法isEnable方法判断账户是否冻结
         if (isEnable()){
@@ -89,5 +102,64 @@ public class Transaction extends ActionSupport implements RequestAware, SessionA
         }
         request.put("message33", "操作失败！<a href='javascript:history.go(-1)'>返回</a>");
         return "message";
+    }
+
+    public void validateWithdrawal(){
+        //比较取款页面输入的金额与账户余额
+        if (log.getTrMoney() > account.getBalance()){
+            this.addFieldError("log.trMoney", "您的账户余额不足");
+        }
+    }
+
+    public String withdrawal(){
+        //调用自定义的方法isEnable，判断账户是否冻结
+        if (isEnable()){
+            //使用isEnable方法从Session中重新获取的账户对象，给交易信息对象log中关联的账户对象属性赋值
+            log.setAccount(account);
+            session.put("user", account);
+            //调用业务方法，更新账户表Account中的余额，并在交易信息表中transaction_log中添加记录
+            return isSuccess(transactionBiz.withdrawal(log));
+        }
+        return "message";
+    }
+
+    public void validateTransfer(){
+        if (log.getOtherid() == account.getAccountid()){
+            this.addFieldError("log.otherid", "您不能转账给自己");
+        }
+        if (userBiz.getAccount(log.getOtherid()) == null){
+            this.addFieldError("log.otherid", "该账户不存在");
+        }
+        if (log.getTrMoney() > account.getBalance()){
+            this.addFieldError("log.otherid", "您的账户余额不足");
+        }
+    }
+
+    /**
+     * 转账
+     */
+    public String transfer(){
+        //调用自定义方法isEnable判断账户是否冻结
+        if (isEnable()){
+            //使用执行isEnable方法从Session中重新获取的账户对象，给交易信息对象log中关联的账户对象属性赋值
+            log.setAccount(account);
+            session.put("user", account);
+            //调用业务方法，更新转账方和入账方的账户表Account中的余额，并在交易信息表transaction_log中添加对象
+            return isSuccess(transactionBiz.transfer(log));
+        }
+        return "message";
+    }
+
+    public String list(){
+        //获取待显示页页码
+        int curPage = pager.getCurPage();
+        //根据待显示页页码和账户对象获取交易记录
+        List<TransactionLog> logs = transactionBiz.getLogs(account, curPage);
+        //获得账户的交易记录总数，用来初始化分页类Pager对象，并设置其perPagerRows和rowCount属性
+        pager = transactionBiz.getPagerOfLogs(account);
+        //设置Pager对象中的待显示页页码
+        pager.setCurPage(curPage);
+        request.put("logs", logs);
+        return "success";
     }
 }

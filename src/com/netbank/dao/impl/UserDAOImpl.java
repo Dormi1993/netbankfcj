@@ -38,4 +38,10 @@ public class UserDAOImpl implements UserDAO {
         Session session = sessionFactory.getCurrentSession();
         session.refresh(account);
     }
+
+    @Override
+    public Account getAccount(int accountid) {
+        Session session = sessionFactory.getCurrentSession();
+        return (Account) session.get(Account.class, accountid);//注意这儿！
+    }
 }
