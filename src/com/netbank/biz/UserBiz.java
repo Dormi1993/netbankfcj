@@ -1,6 +1,7 @@
 package com.netbank.biz;
 
 import com.netbank.entity.Account;
+import com.netbank.entity.Admin;
 
 /**
  * Created by dormi on 2017/1/16.
@@ -13,4 +14,5 @@ public interface UserBiz {
     public abstract boolean modifyAccount(Account account);
     public abstract void reflush(Account account);
     public abstract Account getAccount(int accountid);
+    public abstract Admin getAdmin(String username);
 }

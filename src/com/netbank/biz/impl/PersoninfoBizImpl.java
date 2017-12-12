@@ -4,7 +4,11 @@ import com.netbank.biz.PersoninfoBiz;
 import com.netbank.dao.PersoninfoDAO;
 import com.netbank.dao.UserDAO;
 import com.netbank.entity.Personinfo;
+import com.netbank.entity.Status;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by dormi on 2017/1/19.
@@ -30,5 +34,22 @@ public class PersoninfoBizImpl implements PersoninfoBiz {
     public boolean modifyPersoninfo(Personinfo personinfo) {
         personinfoDAO.modifyPersoninfo(personinfo);
         return true;
+    }
+
+    /**
+     * 根据账户状态获取个人信息，状态为0表示获取所有客户
+     */
+    public List searchPersoninfo(Status status)
+    {
+        List users =new ArrayList();
+        if(status.getId()!=0){
+            //如果账户状态编号不为0，则根据编号获取相应客户记录
+            status=userDAO.getStatus(status.getId());
+            users=personinfoDAO.searchPersoninfo(status);
+        }else{
+            //如果账户状态编号等于0，则获取所有客户记录
+            users= personinfoDAO.getAllPersoninfo();
+        }
+        return users;
     }
 }

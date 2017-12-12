@@ -102,5 +102,7 @@
         <property name="transactionBiz" ref="transactionBiz"/>
     </bean>
 
+    <!-- 使用原型模式定义AdminAction类，AdminAction类的属性userBiz和personinfoBiz通过Annotation注解方式注入 -->
+    <bean name="admin" class="com.netbank.action.AdminAction" scope="prototype" />
 
 </beans>

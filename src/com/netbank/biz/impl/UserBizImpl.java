@@ -3,6 +3,7 @@ package com.netbank.biz.impl;
 import com.netbank.biz.UserBiz;
 import com.netbank.dao.UserDAO;
 import com.netbank.entity.Account;
+import com.netbank.entity.Admin;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -41,6 +42,12 @@ public class UserBizImpl implements UserBiz{
     public Account getAccount(int accountid) {
         return userDAO.getAccount(accountid);
 
+    }
+
+    //根据username获取管理员
+    @Override
+    public Admin getAdmin(String username) {
+        return userDAO.getAdmin(username);
     }
 
 
