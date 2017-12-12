@@ -124,7 +124,7 @@ public class Transaction extends ActionSupport implements RequestAware, SessionA
     }
 
     public void validateTransfer(){
-        if (log.getOtherid() == account.getAccountid()){
+        if (log.getOtherid().intValue() == account.getAccountid().intValue()){
             this.addFieldError("log.otherid", "您不能转账给自己");
         }
         if (userBiz.getAccount(log.getOtherid()) == null){

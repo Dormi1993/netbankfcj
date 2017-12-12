@@ -118,7 +118,7 @@ public class TransactionBizImpl implements TransactionBiz {
         //设置pager对象中的perPagerRows属性，表示每页显示的记录数
         pager.setPerPageRows(10);
         //设置pager对象中rowCount属性目标是记录总数
-        pager.setPerPageRows(count);
+        pager.setRowCount(count);
         //返回pager对象
         return pager;
     }

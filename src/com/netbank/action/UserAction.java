@@ -18,6 +18,7 @@ public class UserAction extends ActionSupport implements RequestAware, SessionAw
 
     //定义通过@Resource注解注入的属性userBiz，可省略set方法
     @Resource private UserBiz userBiz;
+    //但是下面两个需要有set方法，见最下面
     Map<String, Object> request;
     Map<String, Object> session;
 
@@ -27,6 +28,12 @@ public class UserAction extends ActionSupport implements RequestAware, SessionAw
     private Password pwd;
 
     //省略其他请求的处理方法？？？？
+
+    public String logout(){
+        session.remove("user");
+        session.remove("personinfo");
+        return "login";
+    }
 
     /**
      * 登录表单校验，根据用户名获取账户对象
