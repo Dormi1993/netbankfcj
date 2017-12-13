@@ -4,6 +4,7 @@ import com.netbank.biz.UserBiz;
 import com.netbank.dao.UserDAO;
 import com.netbank.entity.Account;
 import com.netbank.entity.Admin;
+import com.netbank.entity.Status;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -27,11 +28,6 @@ public class UserBizImpl implements UserBiz{
     }
 
     @Override
-    public boolean modifyAccount(Account account) {
-        return userDAO.updateAccount(account);
-    }
-
-    @Override
     public void reflush(Account account) {
         userDAO.reflush(account);
     }
@@ -50,5 +46,58 @@ public class UserBizImpl implements UserBiz{
         return userDAO.getAdmin(username);
     }
 
+    /**
+     * 启用账户
+     */
+    public void enabled(int id) {
+        //根据账户编号获取账户对象
+        Account account = userDAO.getAccount(id);
+        //修改账户对象的状态属性，设置为启用
+        Status status = userDAO.getStatus("启用");
+        account.setStatus(status);
+        //更新账户
+        userDAO.updateAccount(account);
+    }
+
+    /**
+     * 冻结账户
+     */
+    public void locking(int id) {
+        //根据账户编号获取账户对象
+        Account account = userDAO.getAccount(id);
+        //修改账户对象的状态属性，设置为冻结
+        Status status = userDAO.getStatus("冻结");
+        account.setStatus(status);
+        //更新账户
+        userDAO.updateAccount(account);
+
+    }
+
+    //添加账户
+    public boolean addAccount(Account account) {
+        Status status=userDAO.getStatus("启用");
+        account.setStatus(status);
+        return userDAO.addAccount(account);
+    }
+
+    /**
+     * 删除用户
+     */
+    public boolean delAccount(int id) {
+        //根据账户id获取账户
+        Account account=userDAO.getAccount(id);
+        //删除账户对象，同时执行级联删除
+        return userDAO.delAccount(account);
+    }
+
+    //修改账户
+    public boolean modifyAccount(Account account) {
+        return userDAO.updateAccount(account);
+    }
+
+    //修改管理员
+    public boolean modifyAdmin(Admin admin) {
+        return userDAO.modifyAdmin(admin);
+    }
 
 }

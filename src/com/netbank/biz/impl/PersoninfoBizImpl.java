@@ -52,4 +52,27 @@ public class PersoninfoBizImpl implements PersoninfoBiz {
         }
         return users;
     }
+
+    /**
+     * 根据条件获取个人信息
+     */
+    public List searchPersoninfo(Personinfo personinfo) {
+        return personinfoDAO.searchPersoninfo(personinfo);
+    }
+
+    /**
+     * 添加个人信息
+     */
+    public boolean add(Personinfo personinfo) {
+        return personinfoDAO.add(personinfo);
+    }
+
+    /**
+     * 查询个人信息
+     */
+    public List getAllPersoninfo() {
+        return personinfoDAO.getAllPersoninfo();
+    }
+
+
 }

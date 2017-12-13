@@ -2,8 +2,7 @@ package com.netbank.action;
 
 import com.netbank.biz.PersoninfoBiz;
 import com.netbank.biz.UserBiz;
-import com.netbank.entity.Admin;
-import com.netbank.entity.Status;
+import com.netbank.entity.*;
 import com.opensymphony.xwork2.ActionSupport;
 import org.apache.struts2.interceptor.RequestAware;
 import org.apache.struts2.interceptor.SessionAware;
@@ -35,8 +34,14 @@ public class AdminAction extends ActionSupport implements RequestAware, SessionA
 
     //定义Admin类型对象，用于封装管理员登录等页面的表单参数
     private Admin admin;
+    private Account account;
 
+    //用来封装从"启用"、"冻结"和"删除"按钮传递来的参数
+    private int id;
     private Status status;
+
+    private Personinfo personinfo;
+    private Password pwd;
 
 
     /**
@@ -78,126 +83,126 @@ public class AdminAction extends ActionSupport implements RequestAware, SessionA
         return "users";
 
     }
-//
-//    //注销
-//    public String logout(){
-//        session.remove("admin");
-//        return "login";
-//    }
-//
-//    /**
-//     * 对开户页面进行校验，验证用户名是否已存在、一张身份证只能拥有一个账户
-//     */
-//    public void validateKaihu(){
-//        if(userBiz.getAccount(account.getUsername())!=null){
-//            request.put("message", "用户名已存在");
-//        }
-//        //获取满足条件的个人信息，这里的条件为开户页面中填写的身份证号
-//        List list = personinfoBiz.searchPersoninfo(personinfo);
-//        //如果所填写的身份证号在个人信息中已存在，则提示错误信息
-//        if(list.size()>0){
-//            this.addFieldError("personinfo.cardid", "一张身份证只能拥有一个账户");
-//        }
-//    }
-//    //开户
-//    public String kaihu(){
-//        //调用业务方法，向账户表Account中添加账户
-//        userBiz.addAccount(account);
-//        //调用业务方法，向个人信息表personinfo添加个人信息
-//        account = userBiz.getAccount(account.getUsername());
-//        personinfo.setAccount(account);
-//        personinfoBiz.add(personinfo);
-//        request.put("message", "添加成功");
-//        return "message";
-//    }
-//
-//    /**
-//     * 对修改密码页面进行验证
-//     */
-//    public void validateChangepwd(){
-//        admin=(Admin)session.get("admin");
-//        if(!pwd.getOldpwd().equals(admin.getPassword())){
-//            this.addFieldError("pwd.oldpwd", "密码不正确");
-//        }
-//        if(!pwd.getNewpwd().equals(pwd.getConfirmpwd())){
-//            this.addFieldError("pwd.confirmpwd", "两次密码不一致");
-//        }
-//    }
-//    //修改密码
-//    public String changepwd(){
-//        admin.setPassword(pwd.getNewpwd());
-//        if(userBiz.modifyAdmin(admin)){
-//            session.put("admin",admin);
-//            request.put("message", "密码修改成功！");
-//            return "message";
-//        }
-//        request.put("message", "密码修改失败！");
-//        return "message";
-//    }
-//
-//    /**
-//     * 删除账户
-//     */
-//    public String del(){
-//        //调用业务方法，删除账户，同时进行级联删除
-//        userBiz.delAccount(id);
-//        return "list";
-//    }
-//    /**
-//     * 查询账户
-//     */
-//    public String search(){
-//        List users=personinfoBiz.searchPersoninfo(personinfo);
-//        request.put("users",users);
-//        return "users";
-//    }
-//    /**
-//     * 启用账户
-//     * @return
-//     */
-//    public String enabled(){
-//        userBiz.enabled(id);
-//        return "list";
-//    }
-//    /**
-//     * 冻结账户
-//     * @return
-//     */
-//    public String locking(){
-//        userBiz.locking(id);
-//        return "list";
-//    }
 
-//    public int getId() {
-//        return id;
-//    }
-//    public void setId(int id) {
-//        this.id = id;
-//    }
+    //注销
+    public String logout(){
+        session.remove("admin");
+        return "login";
+    }
+
+    /**
+     * 对开户页面进行校验，验证用户名是否已存在、一张身份证只能拥有一个账户
+     */
+    public void validateKaihu(){
+        if(userBiz.getAccount(account.getUsername())!=null){
+            request.put("message33", "用户名已存在");
+        }
+        //获取满足条件的个人信息，这里的条件为开户页面中填写的身份证号
+        List list = personinfoBiz.searchPersoninfo(personinfo);
+        //如果所填写的身份证号在个人信息中已存在，则提示错误信息
+        if(list.size()>0){
+            this.addFieldError("personinfo.cardid", "一张身份证只能拥有一个账户");
+        }
+    }
+//    开户
+    public String kaihu(){
+        //调用业务方法，向账户表Account中添加账户
+        userBiz.addAccount(account);
+        //调用业务方法，向个人信息表personinfo添加个人信息
+        account = userBiz.getAccount(account.getUsername());
+        personinfo.setAccount(account);
+        personinfoBiz.add(personinfo);
+        request.put("message33", "添加成功");
+        return "message";
+    }
+
+    /**
+     * 对修改密码页面进行验证
+     */
+    public void validateChangepwd(){
+        admin=(Admin)session.get("admin");
+        if(!pwd.getOldpwd().equals(admin.getPassword())){
+            this.addFieldError("pwd.oldpwd", "密码不正确");
+        }
+        if(!pwd.getNewpwd().equals(pwd.getConfirmpwd())){
+            this.addFieldError("pwd.confirmpwd", "两次密码不一致");
+        }
+    }
+    //修改密码
+    public String changepwd(){
+        admin.setPassword(pwd.getNewpwd());
+        if(userBiz.modifyAdmin(admin)){
+            session.put("admin",admin);
+            request.put("message33", "密码修改成功！");
+            return "message";
+        }
+        request.put("message33", "密码修改失败！");
+        return "message";
+    }
+//
+    /**
+     * 删除账户
+     */
+    public String del(){
+        //调用业务方法，删除账户，同时进行级联删除
+        userBiz.delAccount(id);
+        return "list";
+    }
+    /**
+     * 查询账户
+     */
+    public String search(){
+        List users=personinfoBiz.searchPersoninfo(personinfo);
+        request.put("users",users);
+        return "users";
+    }
+    /**
+     * 启用账户
+     * @return
+     */
+    public String enabled(){
+        userBiz.enabled(id);
+        return "list";
+    }
+    /**
+     * 冻结账户
+     * @return
+     */
+    public String locking(){
+        userBiz.locking(id);
+        return "list";
+    }
+
+    public int getId() {
+        return id;
+    }
+    public void setId(int id) {
+        this.id = id;
+    }
     public Admin getAdmin() {
         return admin;
     }
     public void setAdmin(Admin admin) {
         this.admin = admin;
     }
-//    public Account getAccount() {
-//        return account;
-//    }
-//    public void setAccount(Account account) {
-//        this.account = account;
-//    }
-//    public Personinfo getPersoninfo() {
-//        return personinfo;
-//    }
-//    public void setPersoninfo(Personinfo personinfo) {
-//        this.personinfo = personinfo;
-//    }
-//    public Password getPwd() {
-//        return pwd;
-//    }
-//    public void setPwd(Password pwd) {
-//        this.pwd = pwd;
-//    }
+    public Account getAccount() {
+        return account;
+    }
+    public void setAccount(Account account) {
+        this.account = account;
+    }
+    public Personinfo getPersoninfo() {
+        return personinfo;
+    }
+    public void setPersoninfo(Personinfo personinfo) {
+        this.personinfo = personinfo;
+    }
+    public Password getPwd() {
+        return pwd;
+    }
+    public void setPwd(Password pwd) {
+        this.pwd = pwd;
+    }
     public Status getStatus() {
         return status;
     }

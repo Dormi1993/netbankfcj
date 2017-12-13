@@ -69,4 +69,26 @@ public class UserDAOImpl implements UserDAO {
         Session session=sessionFactory.getCurrentSession();
         return (Status) session.get(Status.class, id);
     }
+
+    //添加账户
+    public boolean addAccount(Account account) {
+        Session session=sessionFactory.getCurrentSession();
+        session.save(account);
+        return true;
+    }
+    /**
+     * 删除账户
+     */
+    public boolean delAccount(Account account) {
+        Session session=sessionFactory.getCurrentSession();
+        session.delete(account);
+        return true;
+    }
+
+    //修改管理员
+    public boolean modifyAdmin(Admin admin) {
+        Session session=sessionFactory.getCurrentSession();
+        session.update(admin);
+        return true;
+    }
 }

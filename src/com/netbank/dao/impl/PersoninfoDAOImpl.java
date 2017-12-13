@@ -3,9 +3,13 @@ package com.netbank.dao.impl;
 import com.netbank.dao.PersoninfoDAO;
 import com.netbank.entity.Personinfo;
 import com.netbank.entity.Status;
+import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
 
 import java.util.List;
 
@@ -47,5 +51,31 @@ public class PersoninfoDAOImpl implements PersoninfoDAO {
         String hql="from Personinfo p where p.account.status.id="+status.getId();
         Query query = session.createQuery(hql);
         return query.list();
+    }
+
+    /**
+     * 根据条件查询个人信息
+     */
+    public List searchPersoninfo(Personinfo personinfo) {
+        Session session=sessionFactory.getCurrentSession();
+        Criteria c=session.createCriteria(Personinfo.class);
+        if(personinfo.getRealname()!=null&&!"".equals(personinfo.getRealname())){
+            if(personinfo.getCardid()!=null){
+                c.add(Restrictions.or(Restrictions.eq("realname",personinfo.getRealname()),Restrictions.eq("cardid",personinfo.getCardid())));
+            }else{
+                c.add(Restrictions.like("realname",personinfo.getRealname(), MatchMode.ANYWHERE));
+            }
+        }
+        c.addOrder(Order.asc("id"));
+        return c.list();
+    }
+
+    /**
+     * 添加个人信息
+     */
+    public boolean add(Personinfo personinfo) {
+        Session session=sessionFactory.getCurrentSession();
+        session.save(personinfo);
+        return true;
     }
 }
