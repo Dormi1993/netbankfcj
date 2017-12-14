@@ -166,7 +166,7 @@ public class AdminAction extends ActionSupport implements RequestAware, SessionA
     }
     /**
      * 冻结账户
-     * @return
+     *
      */
     public String locking(){
         userBiz.locking(id);
