@@ -5,10 +5,12 @@ import com.netbank.entity.Account;
 import com.netbank.entity.Password;
 import com.netbank.entity.Personinfo;
 import com.opensymphony.xwork2.ActionSupport;
+import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.interceptor.RequestAware;
 import org.apache.struts2.interceptor.SessionAware;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
 /**
@@ -56,14 +58,20 @@ public class UserAction extends ActionSupport implements RequestAware, SessionAw
      * @return
      */
     public String login(){
-        //根据关联关系，从账户对象中获取个人信息对象
+        //根据关联关系从账户对象中获取个人信息对象
         personinfo = (Personinfo) account.getPersoninfos().iterator().next();
         //将账户对象存入Session
-        session.put("user", account);
+        session.put("user", account);//haha
         //将该账户个人信息对象存入Session
         session.put("personinfo", personinfo);
+
+        HttpServletRequest httpServletRequest = ServletActionContext.getRequest();
+        String name = httpServletRequest.getParameter("name");
+        String pwd = httpServletRequest.getParameter("pwd");
+
+        System.out.println("haname:" + name + "hpwd: "+ pwd);
         //页面转发
-        return "success";
+        return null;
     }
 
     /**
