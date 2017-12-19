@@ -10,7 +10,11 @@ import org.apache.struts2.interceptor.RequestAware;
 import org.apache.struts2.interceptor.SessionAware;
 
 import javax.annotation.Resource;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Map;
 
 /**
@@ -64,14 +68,8 @@ public class UserAction extends ActionSupport implements RequestAware, SessionAw
         session.put("user", account);//haha
         //将该账户个人信息对象存入Session
         session.put("personinfo", personinfo);
-
-        HttpServletRequest httpServletRequest = ServletActionContext.getRequest();
-        String name = httpServletRequest.getParameter("name");
-        String pwd = httpServletRequest.getParameter("pwd");
-
-        System.out.println("haname:" + name + "hpwd: "+ pwd);
-        //页面转发
-        return null;
+         //页面转发
+        return "success";
     }
 
     /**

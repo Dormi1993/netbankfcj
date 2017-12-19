@@ -89,5 +89,14 @@
     		<result name="message">/message.jsp</result>
     		<!--<interceptor-ref name="roleStack"/>-->
     	</action>
-    </package>
+	  </package>
+
+	<package name="fcj" namespace="/dormi" extends="struts-default">
+		<!--  <default-interceptor-ref name="roleStack"/>-->
+		<!-- 使用通配符实现动态方法调用 -->
+		<action name="fcj" class="com.netbank.action.ServletForGETMethod" >
+			<result name="success">/index.jsp</result>
+		</action>
+	</package>
+
 </struts>    
